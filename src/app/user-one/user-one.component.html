@@ -1,0 +1,20 @@
+<button (click)="login()" *ngIf="!user">Login as Anonymous</button>
+<ng-template [ngIf]="user">
+  <h4>Login as user #{{ user.id }}</h4>
+  <input [formControl]="noteControl" type="text" />
+  <button (click)="addNote()">Add Note</button>
+</ng-template>
+<li class="note" *ngFor="let note of todoList; index as i">
+  <ng-template [ngIf]="editingNow !== i">
+    {{ note.note }}
+    <span (click)="startToEditNote(i, note)" class="edit">
+      ✎
+    </span>
+    <span (click)="removeNote(note)" class="delete">❌</span>
+  </ng-template>
+  <ng-template [ngIf]="editingNow === i">
+    <input *ngIf="editingNow === i" type="text" [formControl]="editControl" />
+    <button (click)="editNote(note, editControl.value); cancelEdit()">save</button>
+    <button (click)="cancelEdit()">cancel</button>
+  </ng-template>
+</li>
